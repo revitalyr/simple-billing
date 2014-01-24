@@ -1,0 +1,263 @@
+<Project>
+  <Name>Billing</Name>
+  <ProjectItem type="NClass.DiagramEditor.ClassDiagram.Diagram" assembly="NClass.DiagramEditor, Version=2.4.1823.0, Culture=neutral, PublicKeyToken=null">
+    <Name>classes</Name>
+    <Language>Java</Language>
+    <Entities>
+      <Entity type="Class">
+        <Name>Account</Name>
+        <Access>Public</Access>
+        <Location left="756" top="80" />
+        <Size width="198" height="128" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">public PhoneNumber phoneNumber</Member>
+        <Member type="Field">public MonetaryUnits balance</Member>
+        <Member type="Field">public TimePoint balanceDate</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>PhoneNumber</Name>
+        <Access>Public</Access>
+        <Location left="1098" top="80" />
+        <Size width="305" height="124" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">public bool isHomeNetwork()</Member>
+        <Member type="Method">public bool isSameOperator(PhoneNumber num)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>UsageTariff</Name>
+        <Access>Public</Access>
+        <Location left="333" top="309" />
+        <Size width="220" height="128" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">public MonetaryUnits fee</Member>
+        <Member type="Field">public int priority</Member>
+        <Member type="Method">public abstract BillItem workup(CDR cdr)</Member>
+        <Modifier>Abstract</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>FixedTariff</Name>
+        <Access>Public</Access>
+        <Location left="32" top="560" />
+        <Size width="162" height="77" />
+        <Collapsed>False</Collapsed>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>TimedTariff</Name>
+        <Access>Public</Access>
+        <Location left="226" top="560" />
+        <Size width="198" height="111" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">public Duration payFreeDuring</Member>
+        <Member type="Field">public Duration payFreeDuration</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>DelayedTariff</Name>
+        <Access>Public</Access>
+        <Location left="448" top="560" />
+        <Size width="174" height="94" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">public Duration startsAfter</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>HomeTariff</Name>
+        <Access>Public</Access>
+        <Location left="351" top="720" />
+        <Size width="162" height="77" />
+        <Collapsed>False</Collapsed>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>ForeignTariff</Name>
+        <Access>Public</Access>
+        <Location left="555" top="720" />
+        <Size width="162" height="77" />
+        <Collapsed>False</Collapsed>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>CDR</Name>
+        <Access>Public</Access>
+        <Location left="139" top="80" />
+        <Size width="223" height="145" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">public Account account</Member>
+        <Member type="Field">public PhoneNumber calledNumber</Member>
+        <Member type="Field">public TimePoint start</Member>
+        <Member type="Field">public Duration duration</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Calendar</Name>
+        <Access>Public</Access>
+        <Location left="1467" top="273" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>DiscountTariff</Name>
+        <Access>Public</Access>
+        <Location left="756" top="560" />
+        <Size width="162" height="77" />
+        <Collapsed>False</Collapsed>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>HolidayTariff</Name>
+        <Access>Public</Access>
+        <Location left="756" top="720" />
+        <Size width="162" height="77" />
+        <Collapsed>False</Collapsed>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>BillItem</Name>
+        <Access>Public</Access>
+        <Location left="1217" top="309" />
+        <Size width="162" height="145" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">public UsageTariff tariff</Member>
+        <Member type="Field">public TimePoint start</Member>
+        <Member type="Field">public Duration duration</Member>
+        <Member type="Field">public MonetaryUnits total</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Invoice</Name>
+        <Access>Public</Access>
+        <Location left="903" top="309" />
+        <Size width="221" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">public Account account</Member>
+        <Member type="Field">public PhoneNumber calledNumber</Member>
+        <Member type="Field">public TimePoint start</Member>
+        <Member type="Field">public Duration duration</Member>
+        <Member type="Field">public BillItem[] items</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+    </Entities>
+    <Relationships>
+      <Relationship type="Association" first="0" second="1">
+        <Label>
+        </Label>
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>979</X>
+          <Y>142</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>1067</X>
+          <Y>102</Y>
+        </BendPoint>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Aggregation</AssociationType>
+      </Relationship>
+      <Relationship type="Generalization" first="3" second="2">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="False">
+          <X>350</X>
+          <Y>467</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Generalization" first="4" second="2">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>322</X>
+          <Y>533</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>429</X>
+          <Y>473</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Generalization" first="5" second="2">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="False">
+          <X>485</X>
+          <Y>472</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Generalization" first="6" second="5">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="False">
+          <X>517</X>
+          <Y>679</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Generalization" first="7" second="5">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>536</X>
+          <Y>684</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>535</X>
+          <Y>684</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Association" first="8" second="0">
+        <Label>
+        </Label>
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>416</X>
+          <Y>143</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>715</X>
+          <Y>106</Y>
+        </BendPoint>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Aggregation</AssociationType>
+      </Relationship>
+      <Relationship type="Generalization" first="10" second="2">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="False">
+          <X>544</X>
+          <Y>472</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Generalization" first="11" second="10">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>836</X>
+          <Y>695</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>836</X>
+          <Y>662</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Association" first="13" second="12">
+        <Label>
+        </Label>
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>1154</X>
+          <Y>440</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>1192</X>
+          <Y>331</Y>
+        </BendPoint>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Aggregation</AssociationType>
+      </Relationship>
+    </Relationships>
+  </ProjectItem>
+</Project>

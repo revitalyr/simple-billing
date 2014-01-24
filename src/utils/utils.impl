@@ -1,0 +1,66 @@
+//utils.impl
+#pragma once
+
+#include <sstream>
+#include "utils.h"
+
+#include "classes/VO/PhoneNumber.h"
+
+namespace BS_Billing {
+
+  template <typename T> inline AnsiString const
+  toStr ( T const & v) {
+    std::stringstream buf;
+    buf << v;
+    return buf.str ();
+  }
+
+  template <> inline AnsiString const
+  toStr ( TimePoint const & v) {
+    char          buf [100];
+    std::time_t   tt = std::chrono::system_clock::to_time_t (v);
+    struct tm     timeinfo;
+
+    localtime_s (&timeinfo, &tt);
+    strftime (buf, sizeof(buf), "%c", &timeinfo);
+    
+    return AnsiString (buf);
+  }
+
+  template <> inline AnsiString const
+  toStr ( Duration const & val) {
+    using namespace std::chrono;
+
+    std::stringstream     buf;
+    Duration              v = val;
+    std::chrono::hours    h = duration_cast<std::chrono::hours> (v);
+    v -= duration_cast<Duration> (h);
+    std::chrono::minutes  m = duration_cast<std::chrono::minutes> (v);
+    v -= duration_cast<Duration> (m);
+    std::chrono::seconds  s = duration_cast<std::chrono::seconds> (v);
+    v -= duration_cast<Duration> (s);
+
+    buf <<        h.count ()
+        << ":" << m.count ()
+        << ":" << s.count () 
+//        << "." << duration_cast<milliseconds> (v).count ()
+        ;
+
+    return buf.str ();
+  }
+
+  template <> inline AnsiString const
+  toStr ( PhoneNumber const & v) {
+    std::stringstream buf;
+    buf << "PhoneNumber: id=" << v.getID () << ", mNumber='" << v.mNumber << "'";
+    return buf.str ();
+  }
+
+  template <> inline AnsiString const
+  toStr ( Account const & v) {
+    std::stringstream buf;
+    buf << "Account: id=" << v.getID () << ", '" << toStr (v.mPhoneNumber) << "', mBalance=" << toStr (v.mBalance) << " on " << toStr (v.mBalanceDate);
+    return buf.str ();
+  }
+
+}

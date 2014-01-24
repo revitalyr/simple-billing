@@ -1,0 +1,77 @@
+#ifndef IdBasedContainer_imp
+  #define IdBasedContainer_imp
+
+  #include "IdBasedContainer.h"
+  #include "utils/exceptions.h"
+
+  #ifdef _DEBUG
+    #define inline
+  #endif //_DEBUG
+
+namespace BS_Billing {
+  #define   TMPL_IdBasedContainer_HEAD      template <class ItemType>
+  #define   TMPL_IdBasedContainer_CLASS     IdBasedContainer <ItemType>
+  #define   TMPL_IdBasedContainer( x )      TMPL_IdBasedContainer_HEAD  x TMPL_IdBasedContainer_CLASS
+
+  TMPL_IdBasedContainer (inline)::
+  IdBasedContainer ( ) 
+  { 
+  }
+
+  TMPL_IdBasedContainer (inline)::
+  ~IdBasedContainer ( ) 
+  { 
+  }
+
+  TMPL_IdBasedContainer (inline IdBasedContainer <ItemType> &)::
+  instance () {
+    static SelfType    inst;
+    return inst;
+  }
+
+  TMPL_IdBasedContainer (inline ItemType const)::
+  getByID ( AnsiString const & strId, AccessMode mode) {
+    return getByID (strToInt (strId), mode);
+  }
+
+  TMPL_IdBasedContainer (inline ItemType const)::
+  getByID ( tID const & id, AccessMode mode) {
+    tCIt    it = gDB.find (id);
+
+    if ( it != gDB.end () )
+      return it->second;
+
+    if ( mode != AccessMode::AllowCreation )
+      throw NonExistingException (AnsiString (typeid (ItemType).name ()) += " id " + id);
+
+    ItemType result (id);
+
+    gDB [result.getID ()] = result;
+
+    return result;
+  }
+
+  TMPL_IdBasedContainer (inline void)::
+  update ( ItemType const & inst, AccessMode mode) {
+    if ( ! inst.isValid () )
+      throw BadInstanceException (toStr (inst));
+
+    tCIt    it = gDB.find (inst.getID ());
+
+    if ( (it == gDB.end ()) && (mode != AccessMode::AllowCreation) )
+      throw NonExistingException (toStr (inst));
+
+    gDB [inst.getID ()] = inst;
+  }
+
+  #undef    TMPL_IdBasedContainer_HEAD
+  #undef    TMPL_IdBasedContainer_CLASS
+  #undef    TMPL_IdBasedContainer
+
+} //namespace BS_Billing
+
+  #ifdef _DEBUG
+    #undef inline
+  #endif //_DEBUG
+
+#endif  //IdBasedContainer_imp
